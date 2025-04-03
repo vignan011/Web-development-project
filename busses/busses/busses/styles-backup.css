@@ -1,0 +1,89 @@
+
+    body {
+        background-image: url('8493.jpg');
+        background-size: contain; /* Ensure the image fits within the container */
+        background-position: center center; /* Center the image both vertically and horizontally */
+        background-repeat: no-repeat; /* No repetition of the image */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        text-align: center;
+    }
+    
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .logo {
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-top: 80px; /* Space for fixed header */
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-button {
+            margin-top: 20px;
+            background-color: #d9534f;
+        }
+
+        .back-button:hover {
+            background-color: #c9302c;
+        }
+   
+
+
+
+  

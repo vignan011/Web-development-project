@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Management System - Passenger</title>
+  <style>
+      body {
+          background-image: url('8493.jpg');
+          background-size: 100%;
+          background-position:center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          text-align:center;
+      }
+
+      .header {
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 10;
+          opacity: 0;
+          animation: fadeIn 1s forwards;
+      }
+
+      .logo {
+          width: 80px;
+          margin-right: 10px;
+      }
+
+      h1 {
+          font-size: 36px;
+          color: #4CAF50;
+          margin-top: 40px; /* Space for fixed header */
+      }
+
+      input, button {
+          padding: 12px;
+          margin: 10px 0;
+          width: 25%;
+          border: 2px solid #4CAF50;
+          border-radius: 5px;
+          font-size: 18px;
+      }
+
+      button {
+          background-color: #4CAF50;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s;
+      }
+
+      button:hover {
+          background-color: #45a049;
+      }
+
+      .hidden {
+          display: none;
+      }
+
+      @keyframes fadeIn {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+      }
+
+      #locationDisplay {
+          margin-top: 20px;
+          font-size: 18px;
+      }
+
+      /* Styles for the bus details container */
+      .bus-details-box {
+          background-color: white;
+          padding: 15px;
+          margin-top: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          text-align: left;
+          width: 50%;
+          margin: 20px auto; /* Center align the box */
+      }
+
+      /* Styles for each bus info */
+      .bus-info {
+          margin-bottom: 15px;
+      }
+
+      .view-location-btn {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 10px;
+      }
+
+      .view-location-btn:hover {
+          background-color: #45a049;
+      }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+      <img src="logo.png" alt="Logo" class="logo">
+      <div class="title">BSAS</div>
+  </div>
+
+  <h1>Bus Management System - Passenger</h1>
+
+  <div class="login-page">
+    <h2>Login</h2>
+    <form class="login-form" onsubmit="return handleLogin(event)">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Signup</a></p>
+    
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">Back</button>
+  </div>
+
+  <div id="busDetails" class="bus-details hidden">
+    <h2>Select Your Route</h2>
+    <form id="routeForm" onsubmit="return showBuses(event)">
+      <label for="from">From:</label>
+      <input type="text" id="from" placeholder="Enter departure location" required><br>
+      <label for="to">To:</label>
+      <input type="text" id="to" placeholder="Enter destination location" required><br><br>
+      <button type="submit">Find Buses</button>
+    </form>
+    
+    <div id="busList"></div>
+    <div id="locationDisplay"></div>
+    <button onclick="startTracking()">Track Bus Location</button>
+  </div>
+
+  <script>
+    let watchId;
+
+    function goBack() {
+      window.history.back();
+    }
+
+    // Handle login and redirect to view bus details
+    function handleLogin(event) {
+      event.preventDefault(); // Prevent the default form submission
+      
+      // Redirect to bus details page
+      document.querySelector('.login-page').classList.add('hidden');
+      document.getElementById('busDetails').classList.remove('hidden');
+      
+      return false; // Prevent further form submission
+    }
+
+    function showBuses(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const from = document.getElementById('from').value.toLowerCase();
+      const to = document.getElementById('to').value.toLowerCase();
+      
+      displayBusDetails(from, to);
+      return false; // Prevent further form submission
+    }
+
+    function displayBusDetails(from, to) {
+      const busList = document.getElementById('busList');
+      busList.innerHTML = ''; // Clear existing details
+
+      // Simulate bus details stored in localStorage
+      const busDetails = [
+        { busNumber: '111', route: 'GAJUWAKA - YENDADA', availableSeats: 10, departureTime: '10:00 AM', location: { lat: 28.7041, lng: 77.1025 } },
+        { busNumber: '101', route: 'GAJUWAKA - YENDADA', availableSeats: 10, departureTime: '10:00 AM', location: { lat: 28.7041, lng: 77.1025 } },
+        { busNumber: '102', route: 'Airport - Main Station', availableSeats: 5, departureTime: '11:00 AM', location: { lat: 28.6448, lng: 77.216721 } },
+        { 
+        busNumber: '111V', 
+        route: 'GAJUWAKA - YENDADA', 
+        availableSeats: 10, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.683482975584397, lng: 83.19348885642955 } 
+    },
+    { 
+        busNumber: '222R', 
+        route: 'YENDADA - RTC COMPLEX', 
+        availableSeats: 5, 
+        departureTime: '8:00 AM', 
+        location: { lat: 17.797372627588604, lng: 83.2095 } 
+    },
+    { 
+        busNumber: '411V', 
+        route: 'GAJUWAKA - YENDADA', 
+        availableSeats: 5, 
+        departureTime: '10:00 AM', 
+        location: { lat: 17.6903, lng: 83.2064 } 
+    },
+    { 
+        busNumber: '111', 
+        route: 'GAJUWAKA - YENDADA', 
+        availableSeats: 5, 
+        departureTime: '12:00 PM', 
+        location: { lat: 17.6858, lng: 83.2187 } 
+    },
+    { 
+        busNumber: '222R', 
+        route: 'YENDADA - MADDILAPALEM', 
+        availableSeats: 8, 
+        departureTime: '7:00 AM', 
+        location: { lat: 17.6985, lng: 83.2095 } 
+    },
+    { 
+        busNumber: '999', 
+        route: 'YENDADA - RTC COMPLEX', 
+        availableSeats: 15, 
+        departureTime: '6:00 AM', 
+        location: { lat: 17.7065, lng: 83.2226 } 
+    },
+    { 
+        busNumber: '541', 
+        route: 'NAD - PENDURTHI', 
+        availableSeats: 6, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.744558060424225, lng: 83.23692908695142 } 
+    },
+    { 
+        busNumber: '28Z/H', 
+        route: 'ZILLA PARISHAD - GOPALAPATNAM', 
+        availableSeats: 10, 
+        departureTime: '7:00 AM', 
+        location: { lat: 17.711010422439255, lng: 83.31313124782794 } 
+    },
+    { 
+        busNumber: '6', 
+        route: 'SIMHACHALAM - NAD', 
+        availableSeats: 6, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.771284976298094, lng: 83.23623461637177 } 
+    },
+    { 
+        busNumber: '540', 
+        route: 'MVP COMPLEX - AKKAPALAM', 
+        availableSeats: 10, 
+        departureTime: '3:00 AM', 
+        location: { lat: 17.74132199978333, lng: 83.33431812070044 } 
+    },
+    { 
+        busNumber: '55k', 
+        route: 'PENDURTHI - SICINDA', 
+        availableSeats: 5, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.800411147858807, lng: 83.2101727456542 } 
+    },
+    { 
+        busNumber: '900k', 
+        route: 'RTC COMPLEX - RUSHIKONDA', 
+        availableSeats: 5, 
+        departureTime: '3:00 AM', 
+        location: { lat: 17.72439282150517, lng: 83.30786462045259 } 
+    },
+    { 
+        busNumber: '300', 
+        route: 'ANAKAPALLE - CHODAVARAM', 
+        availableSeats: 10, 
+        departureTime: '10:00 AM', 
+        location: { lat: 17.68802708147968, lng: 83.00824658617478 } 
+    },
+    { 
+        busNumber: '28', 
+        route: 'NAD - SIMHACHALAM', 
+        availableSeats: 15, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.742788347962282, lng: 83.23513052582035 } 
+    },
+    { 
+        busNumber: '55', 
+        route: 'NAD - SCINDIA', 
+        availableSeats: 4, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.744035841753696, lng: 83.2279304523357 } 
+    },
+    { 
+        busNumber: '5', 
+        route: 'GOPALAPATNAM - OHPO', 
+        availableSeats: 4, 
+        departureTime: '5:00 AM', 
+        location: { lat: 17.755925828720247, lng: 83.21709508814519 } 
+    },
+    { 
+        busNumber: '48A', 
+        route: 'AKKAYAPALAM - RTC COMPLEX', 
+        availableSeats: 5, 
+        departureTime: '8:00 AM', 
+        location: { lat: 17.740637085758852, lng: 83.29995071618372 } 
+    }
+]
+    
+      ;
+
+      const filteredBuses = busDetails.filter(bus => 
+        bus.route.toLowerCase().includes(from) && bus.route.toLowerCase().includes(to)
+      );
+
+      if (filteredBuses.length === 0) {
+        busList.innerHTML = '<p>No buses available for the selected route.</p>';
+      } else {
+        // Create the white box container for bus details
+        const busDetailsBox = document.createElement('div');
+        busDetailsBox.classList.add('bus-details-box');
+
+        filteredBuses.forEach(bus => {
+          const busInfo = document.createElement('div');
+          busInfo.className = 'bus-info';
+          busInfo.innerHTML = `
+            <p><strong>Bus Number:</strong> ${bus.busNumber}</p>
+            <p><strong>Route:</strong> ${bus.route}</p>
+            <p><strong>Available Seats:</strong> ${bus.availableSeats}</p>
+            <p><strong>Departure Time:</strong> ${bus.departureTime}</p>
+            <button class="view-location-btn" onclick="viewLocation(${bus.location.lat}, ${bus.location.lng})">View Location</button>
+          `;
+          busDetailsBox.appendChild(busInfo);
+        });
+
+        busList.appendChild(busDetailsBox);
+
+        // Display total number of buses available
+        const totalBuses = document.createElement('p');
+        totalBuses.innerText = `Total Buses Available: ${filteredBuses.length}`;
+        busDetailsBox.appendChild(totalBuses);
+      }
+    }
+
+    // Function to open Google Maps with the bus's location
+    function viewLocation(lat, lng) {
+      const url = `https://www.google.com/maps?q=${lat},${lng}`;
+      window.open(url, '_blank'); // Open in a new tab
+    }
+
+    function startTracking() {
+      if (navigator.geolocation) {
+        watchId = navigator.geolocation.watchPosition(showPosition, showError);
+      } else {
+        document.getElementById('locationDisplay').innerText = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      const locationDisplay = document.getElementById('locationDisplay');
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      locationDisplay.innerText = `Your Location: Latitude: ${lat}, Longitude: ${lon}`;
+      
+      // Simulate bus location update (for demonstration purposes)
+      const busLat = lat + (Math.random() * 0.01 - 0.005); // Simulated bus latitude
+      const busLon = lon + (Math.random() * 0.01 - 0.005); // Simulated bus longitude
+      locationDisplay.innerText += `\nBus Location: Latitude: ${busLat.toFixed(5)}, Longitude: ${busLon.toFixed(5)}`;
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById('locationDisplay').innerText = "User denied the request for Geolocation.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById('locationDisplay').innerText = "Location information is unavailable.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById('locationDisplay').innerText = "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          document.getElementById('locationDisplay').innerText = "An unknown error occurred.";
+          break;
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+
+body {
+      background-image: url('8493.jpg');
+      background-size: cover; /* Make the background image fill the entire page */
+      background-position: center center; /* Center the image both vertically and horizontally */
+      background-repeat: no-repeat; /* No repetition of the image */
+      height: 100vh; /* Ensure the body takes the full height of the viewport */
+      display: flex;
+      justify-content: center; /* Center the content horizontally */
+      align-items: center; /* Center the content vertically */
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      text-align: center;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 5px; /* Reduce padding to bring logo and title closer to the top */
+    position: fixed; /* Fix the header to the top-left corner */
+    top: 0;
+    left: 0;
+    z-index: 10;
+    opacity: 0; /* Start invisible for the fadeIn effect */
+    animation: fadeIn 1s forwards; /* Apply fade-in animation */
+}
+
+.logo { width: 50px; height: auto; }
+
+.title { font-size: 2em; margin-left: 10px; }
+
+  
+  .header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 50px;
+    height: auto;
+  }
+  
+  .title {
+    font-size: 2em;
+    margin-left: 10px;
+  }
+  
+  .buses-page {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    text-align: center;
+  }
+  
+  #bus-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .bus-info {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .bus-info .bus-details {
+    margin-bottom: 15px;
+  }
+  
+  .view-location-btn {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .view-location-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .back-button {
+    margin-top: 20px;
+    background-color: #d9534f;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+  }
+  
+  .back-button:hover {
+    background-color: #c9302c;
+  }
+  .bus-info {
+    background-color: white; /* White background for bus details */
+    padding: 20px; /* Add padding inside the box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 15px; /* Space between bus info boxes */
+}
+
+.view-location-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px; /* Add padding to the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 10px; /* Add space between the bus info and the button */
+    display: block; /* Full width button */
+    width: 100%;
+    text-align: center; /* Center the button text */
+}
+
+.view-location-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+  
+.content-box {
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for raised effect */
+    max-width: 800px;
+    margin: 10px auto; /* Center the box */
+    text-align: left;
+}
+
+.sub-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    position: absolute;
+    padding-bottom: 0px; /* Add some space below the title */
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin-bottom: 0 px;
+    margin-top: 0px;
+}
+
+.about-text {
+    font-weight: bold;
+    font-size: 18px;
+    padding-top: 0px;
+    color: #333; /* Dark color for readability */
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.about-text ul {
+    list-style: inside; /* Ensures bullets are inside the content box */
+    padding: 0;
+    margin-left: 20px;
+}
+
+.about-text li {
+    font-weight: normal; /* Normal weight for list items */
+    margin: 10px 0; /* Space between each list item */
+}
+.about-text {
+    font-weight: bold; /* Make text bold */
+    font-size: 18px; /* Increase font size for better readability */
+    color: #333; /* Dark color for more visibility */
+    margin: 20px 0; /* Add space between paragraphs */
+    line-height: 1.6; /* Increase line height for better readability */
+}
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.main-title { font-size: 2.5em; }
+
+.slogan { font-size: 1.5em; margin-bottom: 20px; }
+
+
+
+button {
+    padding: 10px 20px; /* Original size for buttons on other pages */
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
