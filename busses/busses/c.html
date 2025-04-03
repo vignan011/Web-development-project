@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Management System - Conductor</title>
+    <style>
+        body {
+            background-image: url('8493.jpg');
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            animation: fadeIn 1s forwards;
+        }
+
+        .logo {
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-top: 80px; /* Space for fixed header */
+        }
+
+        
+
+        input, button {
+            padding: 12px;
+            margin: 10px 0;
+            width: 50%;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="title">BSAS</div>
+    </div>
+
+    <h1>Bus Management System - Conductor</h1>
+
+    <!-- Step 1: Login Form -->
+    <section id="login">
+        <h2>Login</h2>
+        <form id="loginForm" onsubmit="return login();">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage" class="hidden"></p>
+    </section>
+
+    <!-- Step 2: Location Page -->
+    <section id="location" class="hidden">
+        <h2>Location</h2>
+        <form id="locationForm" onsubmit="return enterLocation();">
+            <input type="text" id="locationInput" placeholder="Location" required>
+            <button type="submit">Submit Location</button>
+        </form>
+        <p id="locationMessage" class="hidden"></p>
+    </section>
+
+    <!-- Step 3: Bus Details Entry Form -->
+    <section id="bus-details" class="hidden">
+        <h2>Enter Bus Details</h2>
+        <form id="busForm" onsubmit="return enterBusDetails();">
+            <input type="text" id="busNumber" placeholder="Bus Number" required>
+            <input type="text" id="route" placeholder="Route" required>
+            <input type="number" id="availableSeats" placeholder="Available Seats" required>
+            <input type="time" id="departureTime" required>
+            <button type="submit">Add/Update Bus</button>
+        </form>
+        <p id="busMessage" class="hidden"></p>
+    </section>
+
+    <script>
+        function login() {
+            document.getElementById('loginMessage').innerText = 'Login successful!';
+            document.getElementById('loginMessage').classList.remove('hidden');
+            document.getElementById('login').classList.add('hidden');
+            document.getElementById('location').classList.remove('hidden');
+            return false; // Prevent form submission
+        }
+
+        function enterLocation() {
+            const location = document.getElementById('locationInput').value;
+            document.getElementById('locationMessage').innerText = 'Location entered: ' + location;
+            document.getElementById('locationMessage').classList.remove('hidden');
+            document.getElementById('location').classList.add('hidden');
+            document.getElementById('bus-details').classList.remove('hidden');
+            return false; // Prevent form submission
+        }
+
+        function enterBusDetails() {
+            const busNumber = document.getElementById('busNumber').value;
+            const route = document.getElementById('route').value;
+            const availableSeats = document.getElementById('availableSeats').value;
+            const departureTime = document.getElementById('departureTime').value;
+
+            const busDetail = { busNumber, route, availableSeats, departureTime };
+
+            let busDetails = JSON.parse(localStorage.getItem('busDetails')) || [];
+            const existingIndex = busDetails.findIndex(bus => bus.busNumber === busNumber);
+
+            if (existingIndex > -1) {
+                busDetails[existingIndex] = busDetail;
+                document.getElementById('busMessage').innerText = 'Bus Details Updated: ' + busNumber;
+            } else {
+                busDetails.push(busDetail);
+                document.getElementById('busMessage').innerText = 'Bus Details Added: ' + busNumber;
+            }
+
+            localStorage.setItem('busDetails', JSON.stringify(busDetails));
+            document.getElementById('busMessage').classList.remove('hidden');
+            return false; // Prevent form submission
+        }
+    </script>
+
+</body>
+</html>

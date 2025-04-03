@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Bus Service Application System</title>
+  <style>
+  body {
+        background-image: url('8493.jpg');
+        background-size: contain; /* Ensure the image fits within the container */
+        background-position: center center; /* Center the image both vertically and horizontally */
+        background-repeat: no-repeat; /* No repetition of the image */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        text-align: center;
+    }
+  .header { display: flex; align-items: center; }
+  .logo { width: 50px; height: auto; }
+  .title { font-size: 2em; margin-left: 10px; }
+  .welcome-page { text-align: center; margin-top: 40px; }
+  .main-title { .main-title {
+    font-size: 50px;
+    color: #090909;
+    margin-bottom: 10px;
+} }
+  .slogan { 
+    font-size: 26px;
+    color: #000000;
+    margin-bottom: 30px;
+} 
+  .button-container { margin-top: 10px; flex-direction: column; gap: 15px;}
+  button { margin: 5px; padding: 10px 20px; font-size: 1em; }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="title">BSAS</div>
+  </div>
+
+  <div class="welcome-page">
+    <h1 class="main-title">Bus Service Application System</h1>
+    <h2 class="slogan">The Right Route, Every Time</h2>
+    <div class="button-container">
+      <button onclick="location.href='p.html'">Passenger Login</button>
+      <button onclick="location.href='c.html'">Conductor Login</button>
+      <button onclick="location.href='signup.html'">Signup</button>
+      <button onclick="location.href='about.html'">About</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Check if the user has already visited the home page
+      if (sessionStorage.getItem('visited')) {
+        // If visited, skip animations
+        document.querySelector('.logo').style.opacity = '1';
+        document.querySelector('.title').style.opacity = '1';
+        document.querySelector('.main-title').style.opacity = '1';
+        document.querySelector('.slogan').style.opacity = '1';
+        document.querySelectorAll('.button-container button').forEach(button => {
+          button.style.opacity = '1';
+        });
+      } else {
+        // Run animations for the first-time visitor
+        const logo = document.querySelector('.logo');
+        const title = document.querySelector('.title');
+        const mainTitle = document.querySelector('.main-title');
+        const slogan = document.querySelector('.slogan');
+        const buttons = document.querySelectorAll('.button-container button');
+
+        
+
+        // Set a flag in sessionStorage to track that the user has visited the page
+        sessionStorage.setItem('visited', 'true');
+      }
+    });
+  </script>
+</body>
+</html>
